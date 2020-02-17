@@ -2,12 +2,12 @@
 Guide to configure react app. 
 Stack:
 1. [Typescript](#typesctipt)
-2. [TSLint](#TSLint)
-3. [Prettier](#Prettier)
-4. [Styles + Bootstrap](#Styles)
-5. [Translations](#Translations)
-6. [Fetching data](#Fetching-data)
-7. [Redux](#Redux)
+2. [Redux](#Redux)
+3. [TSLint](#TSLint)
+4. [Prettier](#Prettier)
+5. [Styles + Bootstrap](#Styles)
+6. [Translations](#Translations)
+7. [Fetching data](#Fetching-data)
 8. [Router](#Router)
 9. [Tests](#Tests)
 
@@ -24,33 +24,65 @@ For more info visit https://facebook.github.io/create-react-app/docs/getting-sta
 
 1. `npm install typescript --save-dev`
 2. `npm install @types/node @types/react @types/react-dom --save-dev`
-3. rename your `.js` files to `.jsx` in case components or `.ts` in case pure ts files
+3. rename your `.js` files to `.tsx` in case components or `.ts` in case pure typescript files
 
-## TSLint
+## Redux and Saga
+1. `npm install redux redux-saga react-redux`
+2. `npm install @types/react-redux --save-dev`
 
-1. `npm install tslint --save-dev`
-2. `npm install tslint-react --save-dev`
-3. Create `tslint.json`
+## ESLint
+
+Why ESLint?
+https://eslint.org/blog/2019/01/future-typescript-eslint
+
+1. `npm install @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-config-airbnb eslint-plugin-react eslint-plugin-react-redux eslint-plugin-redux-saga eslint-plugin-react-hooks --save-dev`
+2. create `.eslintrc.json` file for configuration
 ```
 {
   "extends": [
-    "tslint:recommended",
-    "tslint-react",
+    "airbnb",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-redux/recommended",
+    "plugin:redux-saga/recommended"
   ],
+  "plugins": ["react-hooks", "react-redux", "redux-saga", "@typescript-eslint"],
+  "env": {
+    "browser": true,
+    "jasmine": true,
+    "jest": true
+  },
   "rules": {
-    // add your favourites rules
-  }
+    "react/jsx-handler-names": 1,
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "redux-saga/no-unhandled-errors": "off",
+    "react-redux/prefer-separate-component-file": "off",
+    "@typescript-eslint/interface-name-prefix": ["warn", "always"],
+    "@typescript-eslint/explicit-function-return-type": 1
+  },
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    }
+  },
+  "parser": "@typescript-eslint/parser"
 }
+```
+3. Create `.eslintignore`
+```
+src/registerServiceWorker.js
+src/**/__tests__/**
 ```
 4. Update `scripts` section in your `package.json`
 ```
 "scripts": { 
-     "lint": "tslint -c tslint.json src/**/*.{ts,tsx} --fix --format verbose"
+    "lint:fix": "eslint './src/**/*.{ts,tsx}'"
  }
 ```
-5. Run `npm run lint`
+5. Run `npm run lint:fix`
 
-## Prettier
+## Prettier - TODO
 
 1. You need to have `TSLint` configured
 2. `npm install tslint-config-prettier --save-dev`
