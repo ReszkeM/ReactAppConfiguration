@@ -1,17 +1,17 @@
 # ReactAppConfiguration
 Guide to configure react app. 
 Stack:
-1. [Typescript](#typesctipt)
-2. [Redux](#Redux)
-3. [TSLint](#TSLint)
-4. [Prettier](#Prettier)
-5. [Styles + Bootstrap](#Styles)
-6. [Translations](#Translations)
-7. [Fetching data](#Fetching-data)
-8. [Router](#Router)
-9. [Tests](#Tests)
+1. [Basic setup](#basic-project-setup)
+2. [Typescript](#typesctipt)
+3. [State management](#state-management)
+4. [Router](#router)
+5. [ESLint](#eslint)
+6. [Prettier](#prettier)
+7. [Styles](#styles)
+8. [Translations](#translations)
+9. [Tests](#tests)
 
-## Basic build setup
+## Basic project setup
 
 1. Update `create-react-app`
 ```
@@ -49,9 +49,29 @@ yarn add typescript @types/node @types/react @types/react-dom @types/jest --dev
 
 For more info visit https://create-react-app.dev/docs/adding-typescript/
 
-## Redux and Saga
-1. `npm install redux redux-saga react-redux`
-2. `npm install @types/react-redux --save-dev`
+## State management
+1. Redux
+```
+npm install redux
+npm install @types/react-redux --save-dev
+# or  
+yarn add redux
+yarn add @types/react-redux --dev
+```
+2. Redux Saga
+```
+npm install redux-saga
+# or  
+yarn add redux-saga
+```
+3. React Query
+```
+npm install react-query
+# or  
+yarn add react-query
+```
+
+## Router
 
 ## ESLint
 
@@ -105,7 +125,7 @@ src/**/__tests__/**
 ```
 5. Run `npm run lint:fix`
 
-## Prettier - TODO
+## Prettier
 
 1. You need to have `TSLint` configured
 2. `npm install tslint-config-prettier --save-dev`
@@ -144,3 +164,9 @@ src/**/__tests__/**
   }
 ```
 7. Run `npm run prettier`
+
+## Styles
+
+## Translations
+
+## Tests
