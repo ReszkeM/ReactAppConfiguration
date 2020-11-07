@@ -13,18 +13,41 @@ Stack:
 
 ## Basic build setup
 
-1. `npx create-react-app my-app`
-2. `cd ./my-app`
-3. `npm install`
-4. `npm start`
+1. Update `create-react-app`
+```
+# run uninstall scrpt to uninstall current version of CRA 
+npm uninstall -g create-react-app
+# or
+yarn global remove create-react-app
+
+# install latest version of CRA 
+npm install -g create-react-app
+#or
+yarn global add create-react-app
+```
+2. Run `create-react-app`
+```
+npx create-react-app my-app
+# or
+npx create-react-app my-app --template typescript
+```
+3. `cd ./my-app`
+4. `npm install`
+5. `npm start`
 
 For more info visit https://facebook.github.io/create-react-app/docs/getting-started
 
 ## Typesctipt
 
-1. `npm install typescript --save-dev`
-2. `npm install @types/node @types/react @types/react-dom --save-dev`
-3. rename your `.js` files to `.tsx` in case components or `.ts` in case pure typescript files
+1. Install typescript and types for default packages.  
+```
+npm install typescript @types/node @types/react @types/react-dom @types/jest --save-dev
+# or  
+yarn add typescript @types/node @types/react @types/react-dom @types/jest --dev
+```
+2. rename your `.js` files to `.tsx` in case components or `.ts` in case pure typescript files
+
+For more info visit https://create-react-app.dev/docs/adding-typescript/
 
 ## Redux and Saga
 1. `npm install redux redux-saga react-redux`
