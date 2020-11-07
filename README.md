@@ -1,4 +1,5 @@
 # ReactAppConfiguration
+
 Guide to configure react app. 
 Stack:
 1. [Basic setup](#basic-project-setup)
@@ -50,6 +51,7 @@ yarn add typescript @types/node @types/react @types/react-dom @types/jest --dev
 For more info visit https://create-react-app.dev/docs/adding-typescript/
 
 ## State management
+
 1. Redux
 ```
 npm install redux
@@ -72,6 +74,54 @@ yarn add react-query
 ```
 
 ## Router
+
+1. Install Router
+```
+npm install react-router react-router-dom
+npm install @types/react-router-dom --save-dev
+# or 
+yarn add react-router react-router-dom
+yarn add @types/react-router-dom --dev
+```
+2. Samples  
+```
+<Switch>
+    <Route
+      path={'/test-route-1'}
+      render={() => (
+        <Layout
+          content={<YourContainer1 />}
+          cannotAccesView={cannotAccesView}
+        />
+      )}
+    />
+
+    <Route
+      path={'/test-route-2'}
+      render={() => {
+        if (cannotAccesView) {
+          return <Redirect to="/" />;
+        }
+        return <Layout content={<YourContainer2 />} />;
+      }}
+    />
+    
+    <Route
+      path={'/test-route-3'}
+      render={() => {
+        if (condition1) {
+          return <Layout content={<YourContainer1 />} />;
+        }
+
+        if (condition2) {
+          return <Layout content={<YourContainer2 />} />;
+        }
+
+        return <Layout content={<YourContainer3 />} />;
+      }}
+    />
+</Switch>
+```
 
 ## ESLint
 
