@@ -128,7 +128,7 @@ yarn add @types/react-router-dom --dev
 Why ESLint?
 https://eslint.org/blog/2019/01/future-typescript-eslint
 
-1. `npm install @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-config-airbnb eslint-plugin-react eslint-plugin-react-redux eslint-plugin-redux-saga eslint-plugin-react-hooks --save-dev`
+1. `npm install @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-config-airbnb eslint-plugin-react eslint-plugin-react-redux eslint-plugin-redux-saga eslint-plugin-react-hooks eslint-plugin-import --save-dev`
 2. create `.eslintrc.json` file for configuration
 ```
 {
@@ -151,7 +151,31 @@ https://eslint.org/blog/2019/01/future-typescript-eslint
     "redux-saga/no-unhandled-errors": "off",
     "react-redux/prefer-separate-component-file": "off",
     "@typescript-eslint/interface-name-prefix": ["warn", "always"],
-    "@typescript-eslint/explicit-function-return-type": 1
+    "@typescript-eslint/explicit-function-return-type": 1,
+    "import/order": [
+      "error",
+      {
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "./styles",
+            "group": "sibling",
+            "position": "after"
+          }
+        ],
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
   },
   "settings": {
     "react": {
@@ -166,14 +190,23 @@ https://eslint.org/blog/2019/01/future-typescript-eslint
 ```
 src/registerServiceWorker.js
 src/**/__tests__/**
+webpack/*
 ```
 4. Update `scripts` section in your `package.json`
 ```
 "scripts": { 
     "lint:fix": "eslint './src/**/*.{ts,tsx}'"
  }
+# or you can use your local esslint
+npm i -g eslint
 ```
-5. Run `npm run lint:fix`
+5. Run linter
+```
+npm run lint:fix
+# or you can use your local esslint
+eslint --ext .ts,.tsx --fix --debug source/path-to-directory
+eslint --fix --debug source/path-to-file/Component.tsx
+```
 
 ## Prettier
 
