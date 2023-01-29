@@ -14,41 +14,100 @@ Stack:
 
 ## Basic project setup
 
-1. Update `create-react-app`
+1. Create project folder
 ```
-# run uninstall scrpt to uninstall current version of CRA 
-npm uninstall -g create-react-app
+mkdir ./test-project
+cd ./test-project
+```
+2. Install parcel
+```
+yarn add --dev parcel
 # or
-yarn global remove create-react-app
-
-# install latest version of CRA 
-npm install -g create-react-app
-#or
-yarn global add create-react-app
+npm install --save-dev parcel
 ```
-2. Run `create-react-app`
+3. Create index page
 ```
-npx create-react-app my-app
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>My First Parcel App</title>
+  </head>
+  <body>
+    <h1>Hello, World!</h1>
+  </body>
+</html>
+```
+4. Run app
+```
+yarn parcel src/index.html
 # or
-npx create-react-app my-app --template typescript
+npx parcel src/index.html
 ```
-3. `cd ./my-app`
-4. `npm install`
-5. `npm start`
+5. Add shortcut scripts to package.json
+```
+ "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  },
+```
+6. Install React
+```
+yarn add react react-dom
+# or
+npm i react react-dom
+```
+7. Create a react component and include it in script
+- src/index.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>My Parcel App</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
+```
+- src/index.js:
+```jsx
+import { createRoot } from "react-dom/client";
+import { App } from "./App";
 
-For more info visit https://facebook.github.io/create-react-app/docs/getting-started
+const container = document.getElementById("app");
+const root = createRoot(container)
+root.render(<App />);
+```
+- src/App.jsx:
+```jsx
+export function App() {
+  return <h1>Hello world!</h1>;
+}
+```
 
 ## Typesctipt
 
+[TSC](https://www.typescriptlang.org/docs/handbook/compiler-options.html) is the official TypeScript compiler from Microsoft. While Parcel’s default transpiler for TypeScript is much faster than TSC, you may need to use TSC if you are using some configuration in `tsconfig.json` that Parcel doesn't support. In these cases, you can use the `@parcel/transformer-typescript-tsc` plugin by adding it to your `.parcelrc`.
+
+.parcelrc
+```rc
+{
+  "extends": "@parcel/config-default",
+  "transformers": {
+    "*.{ts,tsx}": ["@parcel/transformer-typescript-tsc"]
+  }
+}
+```
+
 1. Install typescript and types for default packages.  
 ```
-npm install typescript @types/node @types/react @types/react-dom @types/jest --save-dev
+npm install @types/react @types/react-dom @types/jest --save-dev
 # or  
-yarn add typescript @types/node @types/react @types/react-dom @types/jest --dev
+yarn add @types/react @types/react-dom @types/jest --dev
 ```
-2. rename your `.js` files to `.tsx` in case components or `.ts` in case pure typescript files
-
-For more info visit https://create-react-app.dev/docs/adding-typescript/
 
 ## State management
 
@@ -85,42 +144,31 @@ yarn add @types/react-router-dom --dev
 ```
 2. Samples  
 ```
-<Switch>
-    <Route
-      path={'/test-route-1'}
-      render={() => (
-        <Layout
-          content={<YourContainer1 />}
-          cannotAccesView={cannotAccesView}
-        />
-      )}
-    />
+type Props = {
+  redirectTo: string;
+}
 
-    <Route
-      path={'/test-route-2'}
-      render={() => {
-        if (cannotAccesView) {
-          return <Redirect to="/" />;
-        }
-        return <Layout content={<YourContainer2 />} />;
-      }}
-    />
-    
-    <Route
-      path={'/test-route-3'}
-      render={() => {
-        if (condition1) {
-          return <Layout content={<YourContainer1 />} />;
-        }
+const RequireAuth: React.FC<Props> = ({ redirectTo }): JSX.Element => {
+  const { isAuthenticated } = useIsAuthenticated();
+  return isAuthenticated ? <Outlet /> : <Navigate to={redirectTo} />;
+}
 
-        if (condition2) {
-          return <Layout content={<YourContainer2 />} />;
-        }
+export const App: React.FC = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
 
-        return <Layout content={<YourContainer3 />} />;
-      }}
-    />
-</Switch>
+        <Route path="/settings" element={<RequireAuth redirectTo="/login" />}>
+          <Route index element={<Settings />} />
+          <Route path="account" element={<Account />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  )
+}
 ```
 
 ## ESLint
